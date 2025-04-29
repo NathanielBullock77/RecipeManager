@@ -14,7 +14,7 @@ namespace RecipeManager.MAUI.Views
 
         public Recipe Recipe { get; set; }
 
-        // called by Shell when navigated to
+        
         public string RecipeId
         {
             set => LoadRecipe(value);
@@ -62,7 +62,7 @@ namespace RecipeManager.MAUI.Views
                 return;
 
             await _recipeService.ToggleFavoriteAsync(userId, Recipe.Id);
-            // you could update UI here if desired
+           
         }
     }
 }

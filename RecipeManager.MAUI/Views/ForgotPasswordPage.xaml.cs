@@ -20,10 +20,7 @@ namespace RecipeManager.MAUI.Views
         public ICommand RequestResetCommand => new Command(async () =>
         {
             var ok = await _authService.RequestPasswordResetAsync(Identifier, Identifier);
-            await DisplayAlert(
-              ok ? "Email Sent" : "Error",
-              ok ? "Check your inbox." : "Could not send reset.",
-              "OK");
+            await DisplayAlert("OOps!", "It seems that thanos has snapped the password out of existance! Unfortunatly, nothing is developed to fix this! Blame the devs.", "I dont feel so good..."); ;
         });
     }
 }

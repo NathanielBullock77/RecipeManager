@@ -26,7 +26,7 @@ namespace RecipeManager.MAUI.Views
         {
             base.OnAppearing();
 
-            // Get string (no null ambiguity)
+          
             var uidStr = Preferences.Default.Get<string>("user_id", string.Empty);
             if (string.IsNullOrWhiteSpace(uidStr) || !Guid.TryParse(uidStr, out var userId))
                 return;

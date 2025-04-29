@@ -18,17 +18,15 @@ namespace RecipeManager.MAUI.Views
         private async void OnLoginClicked(object sender, EventArgs e)
         {
             // In a real app, you would show a login page
-            // For demo purposes, we'll just use our test user
+            // using test user for development
             var user = await _authService.LoginAsync("testuser", "your_test_password");
             if (user != null)
             {
-                Preferences.Default.Set("user_id", user.Id.ToString());// store the GUID as string
-
-
+                Preferences.Default.Set("user_id", user.Id.ToString());
                 await DisplayAlert("Success", $"Logged in as {user.Username}", "OK");
                 // In a real app, you would navigate to a user dashboard or recipe listing
-                
-                await Shell.Current.GoToAsync("HomePage");
+
+                await Shell.Current.GoToAsync("//app/home");
             }
             else
             {
@@ -36,6 +34,7 @@ namespace RecipeManager.MAUI.Views
             }
         }
 
+        /*
         private void OnBrowseRecipesClicked(object sender, EventArgs e)
         {
             // In a real app, you would navigate to a recipe browse page
@@ -43,7 +42,7 @@ namespace RecipeManager.MAUI.Views
             async void OnBrowseRecipesClicked(object s, EventArgs e)
             {
                 await Shell.Current.GoToAsync("BrowseRecipesPage");
-            }
-        }
+            } 
+        }*/
     }
 } 

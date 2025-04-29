@@ -23,14 +23,17 @@
                 SemanticProperties.Hint="Login to your account"
                 Clicked="OnLoginClicked"
                 HorizontalOptions="Center" />
-            
-            <Button 
-                x:Name="BrowseRecipesButton"
-                Text="Browse Recipes"
-                SemanticProperties.Hint="Browse available recipes"
-                Clicked="OnBrowseRecipesClicked"
-                HorizontalOptions="Center" />
-                
+
+
+            <!--  
+                       <Button   
+                           x:Name="BrowseRecipesButton"  
+                           Text="Browse Recipes"  
+                           SemanticProperties.Hint="Browse available recipes"  
+                           Clicked="OnBrowseRecipesClicked"  
+                           HorizontalOptions="Center" />  
+                       -->
+
             <Label 
                 Text="Login using username: testuser, password: your_test_password"
                 FontSize="14"
