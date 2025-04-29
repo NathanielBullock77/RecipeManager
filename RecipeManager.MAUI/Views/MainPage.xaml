@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RecipeManager.MAUI.Views.MainPage"
+             Title="Recipe Manager">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+            
+            <Label 
+                Text="Recipe Manager"
+                FontSize="32"
+                HorizontalOptions="Center" />
+            
+            <Label 
+                Text="Welcome to your recipe collection!"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
+            <Button 
+                x:Name="LoginButton"
+                Text="Login"
+                SemanticProperties.Hint="Login to your account"
+                Clicked="OnLoginClicked"
+                HorizontalOptions="Center" />
+            
+            <Button 
+                x:Name="BrowseRecipesButton"
+                Text="Browse Recipes"
+                SemanticProperties.Hint="Browse available recipes"
+                Clicked="OnBrowseRecipesClicked"
+                HorizontalOptions="Center" />
+                
+            <Label 
+                Text="Login using username: testuser, password: your_test_password"
+                FontSize="14"
+                TextColor="Gray"
+                HorizontalOptions="Center" />
+                
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage> 
