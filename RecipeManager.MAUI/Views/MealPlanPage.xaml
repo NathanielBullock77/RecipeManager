@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="RecipeManager.MAUI.Views.MealPlanPage"
+  Title="Meal Plan">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+
+            <Label Text="This Week’s Plan"
+             FontAttributes="Bold"
+             FontSize="20" />
+
+            <Grid RowSpacing="10" ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Day 1 -->
+                <Frame Grid.Column="0" CornerRadius="8" Padding="5">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding WeekDays[0].DayName}" FontAttributes="Bold" />
+                        <CollectionView ItemsSource="{Binding WeekDays[0].Recipes}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding Name}" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+                <!-- Repeat for columns 1–6 binding WeekDays[1]…[6] -->
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

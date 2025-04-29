@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-windows10.0.19041.0;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
@@ -58,6 +58,33 @@
 	  <ProjectReference Include="..\RecipeManager.Core.Models\RecipeManager.Core.Models.csproj" />
 	  <ProjectReference Include="..\RecipeManager.Infrastructure.Persistence.Implementation.InMemory\RecipeManager.Infrastructure.Persistence.Implementation.InMemory.csproj" />
 	  <ProjectReference Include="..\RecipeManager.Infrastructure.Persistence.Repositories\RecipeManager.Infrastructure.Persistence.Repositories.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Views\AddRecipePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	  <None Update="Views\BrowseRecipesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	  <None Update="Views\ForgotPasswordPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	  <None Update="Views\HomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	  <None Update="Views\MealPlanPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	  <None Update="Views\RecipeDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	  <None Update="Views\SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	  <None Update="Views\ShoppingListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
 	</ItemGroup>
 
 </Project> 

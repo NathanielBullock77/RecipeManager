@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="RecipeManager.MAUI.Views.HomePage"
+  Title="Home">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+
+            <Label Text="Favorites"
+             FontAttributes="Bold"
+             FontSize="20" />
+            <CollectionView x:Name="FavoritesCv"
+                      ItemsSource="{Binding FavoriteRecipes}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="8" Padding="10" Margin="0,0,0,10">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                <Button Text="View"
+                        Clicked="OnViewRecipeClicked"
+                        CommandParameter="{Binding Id}" />
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Today's Suggestions"
+             FontAttributes="Bold"
+             FontSize="20" />
+            <CollectionView x:Name="SuggestionsCv"
+                      ItemsSource="{Binding SuggestedRecipes}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="8" Padding="10" Margin="0,0,0,10">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                <Button Text="View"
+                        Clicked="OnViewRecipeClicked"
+                        CommandParameter="{Binding Id}" />
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

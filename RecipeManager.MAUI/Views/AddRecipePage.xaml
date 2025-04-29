@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="RecipeManager.MAUI.Views.AddRecipePage"
+  Title="Add Recipe">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+
+            <Label Text="Recipe Name" FontAttributes="Bold" />
+            <Entry Text="{Binding NewRecipe.Name}"
+             Placeholder="Enter recipe name" />
+
+            <Label Text="Description" FontAttributes="Bold" />
+            <Editor Text="{Binding NewRecipe.Description}"
+              Placeholder="Enter description"
+              HeightRequest="100" />
+
+            <Label Text="Cook Time" FontAttributes="Bold" />
+            <Entry Text="{Binding NewRecipe.CookTime}"
+             Placeholder="e.g. 30 mins" />
+
+            <Label Text="Ingredients" FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding NewRecipe.Ingredients}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout Spacing="10">
+                            <Entry Text="{Binding Quantity}"
+                     WidthRequest="80"
+                     Placeholder="Qty" />
+                            <Entry Text="{Binding Name}"
+                     Placeholder="Ingredient" />
+                            <Button Text="Remove"
+                      Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveIngredientCommand}"
+                      CommandParameter="{Binding}" />
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="Add Ingredient"
+              Command="{Binding AddIngredientCommand}" />
+
+            <Button Text="Save Recipe"
+              Command="{Binding SaveCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

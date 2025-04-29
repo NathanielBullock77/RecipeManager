@@ -1,5 +1,6 @@
 using Microsoft.Maui.Controls;
 using RecipeManager.Application.Services;
+using Microsoft.Maui.Storage;
 using System;
 
 namespace RecipeManager.MAUI.Views
@@ -21,8 +22,13 @@ namespace RecipeManager.MAUI.Views
             var user = await _authService.LoginAsync("testuser", "your_test_password");
             if (user != null)
             {
+                Preferences.Default.Set("user_id", user.Id.ToString());// store the GUID as string
+
+
                 await DisplayAlert("Success", $"Logged in as {user.Username}", "OK");
                 // In a real app, you would navigate to a user dashboard or recipe listing
+                
+                await Shell.Current.GoToAsync("HomePage");
             }
             else
             {
@@ -33,7 +39,11 @@ namespace RecipeManager.MAUI.Views
         private void OnBrowseRecipesClicked(object sender, EventArgs e)
         {
             // In a real app, you would navigate to a recipe browse page
-            DisplayAlert("Info", "Browse Recipes feature will be implemented soon!", "OK");
+           //  DisplayAlert("Info", "Browse Recipes feature will be implemented soon!", "OK");
+            async void OnBrowseRecipesClicked(object s, EventArgs e)
+            {
+                await Shell.Current.GoToAsync("BrowseRecipesPage");
+            }
         }
     }
 } 

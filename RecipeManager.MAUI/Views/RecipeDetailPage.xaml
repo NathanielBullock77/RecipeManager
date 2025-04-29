@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="RecipeManager.MAUI.Views.RecipeDetailPage"
+  Title="Recipe Details">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+
+            <Label Text="{Binding Recipe.Name}"
+             FontSize="24"
+             FontAttributes="Bold" />
+
+            <Label Text="Ingredients" FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding Recipe.Ingredients}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="{Binding Quantity}" />
+                            <Label Text="{Binding Name}" />
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Cook Time" FontAttributes="Bold" />
+            <Label Text="{Binding Recipe.CookTime}" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Add to Meal Plan"
+                Command="{Binding AddToMealPlanCommand}" />
+                <Button Text="{Binding FavoriteButtonText}"
+                Command="{Binding ToggleFavoriteCommand}" />
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
@@ -36,6 +37,15 @@ public static class MauiProgram
 
         // Register Pages
         builder.Services.AddTransient<MainPage>();
+        builder.Services.AddTransient<HomePage>();
+        builder.Services.AddTransient<BrowseRecipesPage>();
+        builder.Services.AddTransient<RecipeDetailPage>();
+        builder.Services.AddTransient<AddRecipePage>();
+        builder.Services.AddTransient<MealPlanPage>();
+        builder.Services.AddTransient<ShoppingListPage>();
+        builder.Services.AddTransient<SettingsPage>();
+        builder.Services.AddTransient<ForgotPasswordPage>();
+
 
 #if DEBUG
         builder.Logging.AddDebug();

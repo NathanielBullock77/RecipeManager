@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="RecipeManager.MAUI.Views.SettingsPage"
+  Title="Settings">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                <Label Text="Dark Theme" VerticalOptions="Center" />
+                <Switch IsToggled="{Binding IsDarkTheme}"
+                Toggled="OnThemeToggled" />
+            </HorizontalStackLayout>
+
+            <Label Text="Dietary Preferences"
+             FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding AllDietaryTags}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="{Binding}" VerticalOptions="Center" />
+                            <Switch IsToggled="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DietaryMap[Binding]}" />
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Save Preferences"
+              Command="{Binding SavePreferencesCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
