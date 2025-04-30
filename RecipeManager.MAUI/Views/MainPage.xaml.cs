@@ -43,6 +43,6 @@ namespace RecipeManager.MAUI.Views
             {
                 await Shell.Current.GoToAsync("BrowseRecipesPage");
             } 
-        }*/
+        }*/   // +!!+!+!+!+!+!++!+!+!+!+!+!++!+!++!+!++!+!+! note to self, Nathan: Come back to this! I cant remember why i commented this out, but it was probably important.
     }
 } 

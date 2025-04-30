@@ -36,7 +36,7 @@
                         </CollectionView>
                     </VerticalStackLayout>
                 </Frame>
-                <!-- Repeat for columns 1–6 binding WeekDays[1]…[6] -->
+                <!-- Repeat for columns 1–6 binding WeekDays 1-6 -->
             </Grid>
 
         </VerticalStackLayout>

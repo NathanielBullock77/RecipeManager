@@ -21,5 +21,10 @@ namespace RecipeManager.Application.Implementation
             var weekStartDate = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
             return _mealPlanService.GenerateShoppingListForWeekAsync(userId, weekStartDate);
         }
+
+        public Task SaveShoppingListAsync(Guid userId, List<Ingredient> items)
+        {
+            throw new NotImplementedException();
+        }
     }
 } 

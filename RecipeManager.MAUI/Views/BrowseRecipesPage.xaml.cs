@@ -5,6 +5,7 @@ using Microsoft.Maui.Controls;
 using RecipeManager.Application.Services;
 using RecipeManager.Core.Models;
 
+
 namespace RecipeManager.MAUI.Views
 {
     public partial class BrowseRecipesPage : ContentPage

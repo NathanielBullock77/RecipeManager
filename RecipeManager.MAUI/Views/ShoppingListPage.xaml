@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage 
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  x:Class="RecipeManager.MAUI.Views.ShoppingListPage"
-  Title="Shopping List">
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="RecipeManager.MAUI.Views.ShoppingListPage"
+    Title="Shopping List">
 
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30">
@@ -11,20 +11,26 @@
             <Label Text="Shopping List"
              FontAttributes="Bold"
              FontSize="20" />
-            <CollectionView ItemsSource="{Binding ShoppingList}">
+
+            <CollectionView ItemsSource="{Binding ShoppingItems}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Padding="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Label Text="{Binding Name}"   Grid.Column="0" />
-                            <Label Text="{Binding Quantity}" Grid.Column="1" HorizontalOptions="End" />
-                        </Grid>
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <Entry Text="{Binding Quantity}"
+                     WidthRequest="80"
+                     Placeholder="Qty" />
+                            <Entry Text="{Binding Name}"
+                     Placeholder="Item" />
+                            <Button Text="Remove"
+                      Clicked="OnRemoveItemClicked"
+                      BindingContext="{Binding .}" />
+                        </HorizontalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <Button Text="Add Item"
+              Clicked="OnAddItemClicked" />
 
         </VerticalStackLayout>
     </ScrollView>

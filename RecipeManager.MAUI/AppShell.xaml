@@ -6,14 +6,14 @@
     xmlns:local="clr-namespace:RecipeManager.MAUI.Views"
     Shell.FlyoutBehavior="Disabled">
 
-    <!-- 1) Your Login page as the first ShellItem -->
+    <!-- 1) "Thy shell not pass" Login goes first -->
     <ShellItem Route="login">
         <ShellContent 
       Title="Login"
       ContentTemplate="{DataTemplate local:MainPage}" />
     </ShellItem>
 
-    <!-- 2) Your TabBar is a direct child of Shell -->
+    <!-- 2) after "thy shell pass", give tabs -->
     <TabBar Route="app" Title="Recipes">
         <ShellContent
       Title="Home"
@@ -26,6 +26,12 @@
       Icon="search.png"
       Route="browse"
       ContentTemplate="{DataTemplate local:BrowseRecipesPage}" />
+        
+        <ShellContent
+      Title="Add Recipe"
+      Icon="search.png"
+      Route="AddRecipe"
+      ContentTemplate="{DataTemplate local:AddRecipePage}" />
 
         <ShellContent
       Title="Meal Plan"

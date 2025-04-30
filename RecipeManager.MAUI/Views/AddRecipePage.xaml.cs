@@ -1,5 +1,6 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using RecipeManager.Application.Services;
@@ -12,42 +13,60 @@ namespace RecipeManager.MAUI.Views
         private readonly IRecipeService _recipeService;
 
         public Recipe NewRecipe { get; set; }
+        public ObservableCollection<Ingredient> Ingredients { get; }
 
         public AddRecipePage(IRecipeService recipeService)
         {
             InitializeComponent();
             _recipeService = recipeService;
 
+            // init the recipe and collection
             NewRecipe = new Recipe
             {
-                Ingredients = new List<Ingredient>()
+                Ingredients = new System.Collections.Generic.List<Ingredient>()
             };
+            Ingredients = new ObservableCollection<Ingredient>();
+
             BindingContext = this;
         }
 
+        // Add Ingredient is clicked
         private void OnAddIngredientClicked(object sender, EventArgs e)
         {
-            NewRecipe.Ingredients.Add(new Ingredient());
-            OnPropertyChanged(nameof(NewRecipe));
+            // add a blank ingredient to the ObservableCollection
+            Ingredients.Add(new Ingredient { Name = string.Empty, Quantity = string.Empty });
         }
 
+        // Remove button of an ingredient row is clicked
         private void OnRemoveIngredientClicked(object sender, EventArgs e)
         {
-            if (sender is Button btn && btn.CommandParameter is Ingredient ing)
-            {
-                NewRecipe.Ingredients.Remove(ing);
-                OnPropertyChanged(nameof(NewRecipe));
-            }
+            // Button.BindingContext is the Ingredient instance
+            var btn = (Button)sender;
+            if (btn.BindingContext is Ingredient ing && Ingredients.Contains(ing))
+                Ingredients.Remove(ing);
         }
 
+        // Save Recipe is clicked
         private async void OnSaveClicked(object sender, EventArgs e)
         {
+            // get current user
             var uidStr = Preferences.Default.Get<string>("user_id", string.Empty);
-            if (string.IsNullOrWhiteSpace(uidStr) || !Guid.TryParse(uidStr, out var userId))
+            if (!Guid.TryParse(uidStr, out var userId))
                 return;
 
+            // copy into NewRcipe
+            NewRecipe.Ingredients = Ingredients.ToList();
             await _recipeService.AddRecipeAsync(NewRecipe, userId);
-            await Shell.Current.GoToAsync("..");
+            var ingList = NewRecipe.Ingredients;
+
+            // navigate into the Shopping tab, passing the raw list
+            await Shell.Current.GoToAsync(
+              "//app/shopping",
+              new Dictionary<string, object> { ["ingredients"] = ingList }
+            );
+
+            // optionaly navigate back
+            await Shell.Current.GoToAsync("//app/home");
         }
     }
 }
