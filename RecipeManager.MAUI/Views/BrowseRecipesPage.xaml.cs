@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
@@ -20,17 +21,32 @@ namespace RecipeManager.MAUI.Views
         {
             InitializeComponent();
             _recipeService = recipeService;
-
-            SearchCommand = new Command(async () =>
+            
+            SearchCommand = new Command(async () => //refresh on search
             {
-                Recipes.Clear();
-                var results = await _recipeService.BrowseRecipesAsync(SearchTerm, null);
-                foreach (var r in results)
-                    Recipes.Add(r);
+                await ReloadRecipes();
             });
 
             BindingContext = this;
         }
+        protected override async void OnAppearing()//refreshes list under search bar on page load
+        {
+            base.OnAppearing();
+
+           
+            await ReloadRecipes();
+
+        }
+
+
+            async Task ReloadRecipes() //Keeps the list fresh
+        {
+            Recipes.Clear();
+            var results = await _recipeService.BrowseRecipesAsync(SearchTerm, null);
+            foreach (var r in results)
+                Recipes.Add(r);
+        }
+
 
 
         private async void OnViewRecipeClicked(object sender, EventArgs e)

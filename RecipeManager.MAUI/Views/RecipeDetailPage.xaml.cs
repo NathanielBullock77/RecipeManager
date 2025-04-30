@@ -65,6 +65,14 @@ namespace RecipeManager.MAUI.Views
 
         }
 
+        async void OnDeleteRecipeClicked(object sender, EventArgs e)
+        {
+            var uidStr = Preferences.Default.Get("user_id", "");
+            if (!Guid.TryParse(uidStr, out var userId) || Recipe == null) return;
+            await _recipeService.DeleteRecipeAsync(Recipe.Id, userId);
+            await Shell.Current.GoToAsync("..");
+        }
+
         async void OnBackClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("..");
