@@ -4,9 +4,9 @@ using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
 using RecipeManager.Application.Implementation;
 using RecipeManager.Application.Services;
-using RecipeManager.Infrastructure.Persistence.Implementation.InMemory;
-using RecipeManager.Infrastructure.Persistence.Repositories;
+using RecipeManager.Infrastructure.Persistence.Implementation.SQLite;
 using RecipeManager.MAUI.Views;
+using System.Threading.Tasks;
 
 namespace RecipeManager.MAUI;
 
@@ -23,10 +23,8 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // Register Infrastructure services
-        builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
-        builder.Services.AddSingleton<IRecipeRepository, InMemoryRecipeRepository>();
-        builder.Services.AddSingleton<IMealPlanRepository, InMemoryMealPlanRepository>();
+        // Register SQLite Infrastructure services
+        builder.Services.AddSQLitePersistence();
 
         // Register Application services
         builder.Services.AddTransient<IAuthService, AuthService>();
@@ -46,11 +44,15 @@ public static class MauiProgram
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<ForgotPasswordPage>();
 
-
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
 
-        return builder.Build();
+        var app = builder.Build();
+        
+        // Initialize the SQLite database
+        Task.Run(async () => await SQLiteDatabaseInitializer.InitializeDatabaseAsync(app.Services));
+        
+        return app;
     }
-} 
+}
