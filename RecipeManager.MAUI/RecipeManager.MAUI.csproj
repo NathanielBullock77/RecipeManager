@@ -10,7 +10,7 @@
 		<WindowsPackageType>None</WindowsPackageType>
 		<DisableXamlGeneratedMain>true</DisableXamlGeneratedMain>
 		<StartupObject Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">RecipeManager.MAUI.WinUI.Main.Program</StartupObject>
-
+		
 		<!-- Display name -->
 		<ApplicationTitle>Recipe Manager</ApplicationTitle>
 
@@ -88,4 +88,4 @@
 	  </None>
 	</ItemGroup>
 
-</Project> 
+</Project>
