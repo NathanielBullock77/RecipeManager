@@ -2,8 +2,6 @@
 
 A cross-platform recipe management application built with .NET MAUI and clean architecture principles.
 
-![Recipe Manager Logo](assets/images/logo.png)
-
 ## 🍽️ Features
 
 - **Recipe Management**: Create, edit, browse, and delete your favorite recipes
