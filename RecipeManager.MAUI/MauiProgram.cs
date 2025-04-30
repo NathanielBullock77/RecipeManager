@@ -50,9 +50,14 @@ public static class MauiProgram
 
         var app = builder.Build();
         
-        // Initialize the SQLite database
-        Task.Run(async () => await SQLiteDatabaseInitializer.InitializeDatabaseAsync(app.Services));
+        // Initialize the SQLite database synchronously before returning the app
+        InitializeDatabase(app.Services).Wait();
         
         return app;
+    }
+    
+    private static async Task InitializeDatabase(IServiceProvider services)
+    {
+        await SQLiteDatabaseInitializer.InitializeDatabaseAsync(services);
     }
 }
