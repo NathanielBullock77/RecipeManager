@@ -58,6 +58,7 @@
 	  <ProjectReference Include="..\RecipeManager.Core.Models\RecipeManager.Core.Models.csproj" />
 	  <ProjectReference Include="..\RecipeManager.Infrastructure.Persistence.Implementation.InMemory\RecipeManager.Infrastructure.Persistence.Implementation.InMemory.csproj" />
 	  <ProjectReference Include="..\RecipeManager.Infrastructure.Persistence.Repositories\RecipeManager.Infrastructure.Persistence.Repositories.csproj" />
+	  <ProjectReference Include="..\RecipeManager.Infrastructure.Persistence.Implementation.SQLite\RecipeManager.Infrastructure.Persistence.Implementation.SQLite.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
