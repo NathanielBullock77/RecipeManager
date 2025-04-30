@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeManager.Application.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeManager.MAUI", "RecipeManager.MAUI\RecipeManager.MAUI.csproj", "{91730E62-3E0E-4E83-AE48-93D1BCA9C44F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeManager.Infrastructure.Persistence.Implementation.SQLite", "RecipeManager.Infrastructure.Persistence.Implementation.SQLite\RecipeManager.Infrastructure.Persistence.Implementation.SQLite.csproj", "{E0DE775D-F452-3B32-8E1C-B67F96EEA913}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{91730E62-3E0E-4E83-AE48-93D1BCA9C44F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91730E62-3E0E-4E83-AE48-93D1BCA9C44F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91730E62-3E0E-4E83-AE48-93D1BCA9C44F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0DE775D-F452-3B32-8E1C-B67F96EEA913}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0DE775D-F452-3B32-8E1C-B67F96EEA913}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0DE775D-F452-3B32-8E1C-B67F96EEA913}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0DE775D-F452-3B32-8E1C-B67F96EEA913}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,4 +57,4 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C48AD7E2-C461-4A8C-AAB9-78D1E2E70F06}
 	EndGlobalSection
-EndGlobal 
+EndGlobal
