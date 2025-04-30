@@ -17,7 +17,7 @@
                     <DataTemplate>
                         <Frame CornerRadius="8" Padding="10" Margin="0,0,0,10">
                             <HorizontalStackLayout Spacing="10">
-                                <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                <Label Text="{Binding Title}" VerticalOptions="Center" />
                                 <Button Text="View"
                         Clicked="OnViewRecipeClicked"
                         CommandParameter="{Binding Id}" />
@@ -36,7 +36,7 @@
                     <DataTemplate>
                         <Frame CornerRadius="8" Padding="10" Margin="0,0,0,10">
                             <HorizontalStackLayout Spacing="10">
-                                <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                <Label Text="{Binding Title}" VerticalOptions="Center" />
                                 <Button Text="View"
                         Clicked="OnViewRecipeClicked"
                         CommandParameter="{Binding Id}" />

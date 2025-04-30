@@ -45,10 +45,7 @@ namespace RecipeManager.MAUI.Views
             if (sender is Button btn && btn.CommandParameter is Guid id)
             {
                 // pass recipeId into the detail page
-                await Shell.Current.GoToAsync(
-                    nameof(RecipeDetailPage),
-                    new Dictionary<string, object> { { "recipeId", id } }
-                );
+                await Shell.Current.GoToAsync($"{nameof(RecipeDetailPage)}?recipeId={id}");
             }
         }
     }
