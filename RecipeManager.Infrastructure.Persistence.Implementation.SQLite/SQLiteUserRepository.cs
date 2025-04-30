@@ -2,8 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using RecipeManager.Core.Models;
 using RecipeManager.Infrastructure.Persistence.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
@@ -17,22 +15,23 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
             _dbContext = dbContext;
         }
 
-        public async Task<User?> GetUserByIdAsync(Guid id)
+        public async Task<User?> GetByIdAsync(Guid id)
         {
             return await _dbContext.Users.FindAsync(id);
         }
 
-        public async Task<User?> GetUserByUsernameAsync(string username)
+        public async Task<User?> GetByUsernameAsync(string username)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<User?> GetByEmailAsync(string email)
         {
-            return await _dbContext.Users.ToListAsync();
+            // Assuming User model has an Email property, otherwise adjust accordingly
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public async Task<bool> CreateUserAsync(User user)
+        public async Task AddAsync(User user)
         {
             if (user.Id == Guid.Empty)
             {
@@ -41,27 +40,12 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
 
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
-            return true;
         }
 
-        public async Task<bool> UpdateUserAsync(User user)
+        public async Task UpdateAsync(User user)
         {
             _dbContext.Users.Update(user);
             await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> DeleteUserAsync(Guid userId)
-        {
-            var user = await _dbContext.Users.FindAsync(userId);
-            if (user == null)
-            {
-                return false;
-            }
-
-            _dbContext.Users.Remove(user);
-            await _dbContext.SaveChangesAsync();
-            return true;
         }
     }
 }

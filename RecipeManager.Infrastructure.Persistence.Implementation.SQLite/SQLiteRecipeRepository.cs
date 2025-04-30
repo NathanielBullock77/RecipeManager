@@ -17,24 +17,50 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
             _dbContext = dbContext;
         }
 
-        public async Task<Recipe?> GetRecipeByIdAsync(Guid id)
+        public async Task<Recipe?> GetByIdAsync(Guid id)
         {
             return await _dbContext.Recipes.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Recipe>> GetRecipesByUserIdAsync(Guid userId)
-        {
-            return await _dbContext.Recipes
-                .Where(r => r.AuthorUserId == userId)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Recipe>> GetAllRecipesAsync()
+        public async Task<IEnumerable<Recipe>> GetAllAsync()
         {
             return await _dbContext.Recipes.ToListAsync();
         }
 
-        public async Task<bool> CreateRecipeAsync(Recipe recipe)
+        public async Task<IEnumerable<Recipe>> FindAsync(string searchTerm, IEnumerable<DietaryTag>? dietaryTags)
+        {
+            var query = _dbContext.Recipes.AsQueryable();
+            
+            // Filter by search term
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(r => r.Title.Contains(searchTerm) || 
+                                        r.Description.Contains(searchTerm));
+            }
+            
+            // Get all recipes and filter by dietary tags in memory
+            // (since we're storing tags as JSON, we can't easily filter them in the database query)
+            var recipes = await query.ToListAsync();
+            
+            // Filter by dietary tags if specified
+            if (dietaryTags != null && dietaryTags.Any())
+            {
+                var tagsList = dietaryTags.ToList();
+                recipes = recipes.Where(r => r.DietaryTags.Any(tag => tagsList.Contains(tag))).ToList();
+            }
+            
+            return recipes;
+        }
+
+        public async Task<IEnumerable<Recipe>> GetByIdsAsync(IEnumerable<Guid> ids)
+        {
+            var idsList = ids.ToList();
+            return await _dbContext.Recipes
+                .Where(r => idsList.Contains(r.Id))
+                .ToListAsync();
+        }
+
+        public async Task AddAsync(Recipe recipe)
         {
             if (recipe.Id == Guid.Empty)
             {
@@ -43,42 +69,22 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
 
             await _dbContext.Recipes.AddAsync(recipe);
             await _dbContext.SaveChangesAsync();
-            return true;
         }
 
-        public async Task<bool> UpdateRecipeAsync(Recipe recipe)
+        public async Task UpdateAsync(Recipe recipe)
         {
             _dbContext.Recipes.Update(recipe);
             await _dbContext.SaveChangesAsync();
-            return true;
         }
 
-        public async Task<bool> DeleteRecipeAsync(Guid recipeId)
+        public async Task DeleteAsync(Guid id)
         {
-            var recipe = await _dbContext.Recipes.FindAsync(recipeId);
-            if (recipe == null)
+            var recipe = await _dbContext.Recipes.FindAsync(id);
+            if (recipe != null)
             {
-                return false;
+                _dbContext.Recipes.Remove(recipe);
+                await _dbContext.SaveChangesAsync();
             }
-
-            _dbContext.Recipes.Remove(recipe);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<IEnumerable<Recipe>> SearchRecipesAsync(string searchTerm)
-        {
-            return await _dbContext.Recipes
-                .Where(r => r.Title.Contains(searchTerm) || r.Description.Contains(searchTerm))
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Recipe>> GetRecipesByDietaryTagAsync(DietaryTag tag)
-        {
-            // This is trickier with EF Core and JSON conversion
-            // We'll need to load all and filter in memory
-            var allRecipes = await _dbContext.Recipes.ToListAsync();
-            return allRecipes.Where(r => r.DietaryTags.Contains(tag));
         }
     }
 }

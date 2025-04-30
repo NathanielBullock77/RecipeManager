@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RecipeManager.Core.Models;
-using RecipeManager.Infrastructure.Persistence.Repositories;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -33,10 +33,9 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
                 {
                     Id = Guid.NewGuid(),
                     Username = "test@example.com",
+                    Email = "test@example.com",
                     PasswordHash = "5f4dcc3b5aa765d61d8327deb882cf99", // "password"
-                    FirstName = "Test",
-                    LastName = "User",
-                    DateRegistered = DateTime.Now
+                    DietaryPreferences = new List<DietaryTag> { DietaryTag.Vegetarian }
                 };
                 
                 await dbContext.Users.AddAsync(testUser);
@@ -49,21 +48,21 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
                     Description = "A quick and easy pasta dish",
                     CookTimeMinutes = 20,
                     AuthorUserId = testUser.Id,
-                    Ingredients = new System.Collections.Generic.List<Ingredient>
+                    Ingredients = new List<Ingredient>
                     {
                         new Ingredient { Name = "Pasta", Quantity = "200g" },
                         new Ingredient { Name = "Olive Oil", Quantity = "2 tbsp" },
                         new Ingredient { Name = "Garlic", Quantity = "2 cloves" },
                         new Ingredient { Name = "Parmesan", Quantity = "50g" }
                     },
-                    Instructions = new System.Collections.Generic.List<string>
+                    Instructions = new List<string>
                     {
                         "Boil pasta according to package instructions",
                         "Heat olive oil in a pan and add minced garlic",
                         "Drain pasta and add to the pan",
                         "Stir in grated parmesan and serve"
                     },
-                    DietaryTags = new System.Collections.Generic.List<DietaryTag>
+                    DietaryTags = new List<DietaryTag>
                     {
                         DietaryTag.Vegetarian
                     }
@@ -76,20 +75,20 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
                     Description = "Classic Caesar salad with homemade dressing",
                     CookTimeMinutes = 15,
                     AuthorUserId = testUser.Id,
-                    Ingredients = new System.Collections.Generic.List<Ingredient>
+                    Ingredients = new List<Ingredient>
                     {
                         new Ingredient { Name = "Romaine Lettuce", Quantity = "1 head" },
                         new Ingredient { Name = "Croutons", Quantity = "1 cup" },
                         new Ingredient { Name = "Parmesan", Quantity = "50g" },
                         new Ingredient { Name = "Caesar Dressing", Quantity = "4 tbsp" }
                     },
-                    Instructions = new System.Collections.Generic.List<string>
+                    Instructions = new List<string>
                     {
                         "Wash and chop the lettuce",
                         "Add croutons and grated parmesan",
                         "Drizzle with dressing and toss to combine"
                     },
-                    DietaryTags = new System.Collections.Generic.List<DietaryTag>
+                    DietaryTags = new List<DietaryTag>
                     {
                         DietaryTag.Vegetarian
                     }
@@ -103,8 +102,7 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
                     Id = Guid.NewGuid(),
                     UserId = testUser.Id,
                     RecipeId = sampleRecipe1.Id,
-                    Date = DateTime.Today,
-                    MealType = "Dinner"
+                    Date = DateTime.Today
                 };
                 
                 await dbContext.MealPlans.AddAsync(mealPlan);

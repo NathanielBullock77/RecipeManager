@@ -17,62 +17,38 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite
             _dbContext = dbContext;
         }
 
-        public async Task<MealPlanEntry?> GetMealPlanByIdAsync(Guid id)
-        {
-            return await _dbContext.MealPlans.FindAsync(id);
-        }
-
-        public async Task<IEnumerable<MealPlanEntry>> GetMealPlansByUserIdAsync(Guid userId)
-        {
-            return await _dbContext.MealPlans
-                .Where(mp => mp.UserId == userId)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<MealPlanEntry>> GetMealPlansByDateRangeAsync(Guid userId, DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<MealPlanEntry>> GetUserMealPlanForDateRangeAsync(Guid userId, DateTime startDate, DateTime endDate)
         {
             return await _dbContext.MealPlans
                 .Where(mp => mp.UserId == userId && mp.Date >= startDate && mp.Date <= endDate)
                 .ToListAsync();
         }
 
-        public async Task<bool> CreateMealPlanAsync(MealPlanEntry mealPlan)
-        {
-            if (mealPlan.Id == Guid.Empty)
-            {
-                mealPlan.Id = Guid.NewGuid();
-            }
-
-            await _dbContext.MealPlans.AddAsync(mealPlan);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> UpdateMealPlanAsync(MealPlanEntry mealPlan)
-        {
-            _dbContext.MealPlans.Update(mealPlan);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> DeleteMealPlanAsync(Guid mealPlanId)
-        {
-            var mealPlan = await _dbContext.MealPlans.FindAsync(mealPlanId);
-            if (mealPlan == null)
-            {
-                return false;
-            }
-
-            _dbContext.MealPlans.Remove(mealPlan);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<IEnumerable<MealPlanEntry>> GetMealPlansByRecipeIdAsync(Guid recipeId)
+        public async Task<MealPlanEntry?> GetUserMealPlanEntryAsync(Guid userId, DateTime date, Guid recipeId)
         {
             return await _dbContext.MealPlans
-                .Where(mp => mp.RecipeId == recipeId)
-                .ToListAsync();
+                .FirstOrDefaultAsync(mp => mp.UserId == userId && mp.Date.Date == date.Date && mp.RecipeId == recipeId);
+        }
+
+        public async Task AddAsync(MealPlanEntry entry)
+        {
+            if (entry.Id == Guid.Empty)
+            {
+                entry.Id = Guid.NewGuid();
+            }
+
+            await _dbContext.MealPlans.AddAsync(entry);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Guid entryId)
+        {
+            var mealPlan = await _dbContext.MealPlans.FindAsync(entryId);
+            if (mealPlan != null)
+            {
+                _dbContext.MealPlans.Remove(mealPlan);
+                await _dbContext.SaveChangesAsync();
+            }
         }
     }
 }
