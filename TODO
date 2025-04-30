@@ -1,1 +1,2 @@
 Nathaniel Bullock(0xC0FFEEBEEF|NathanielBullock77) : Fix settings page | Prettyize pages | Fix png icons on tabs | Fix quirks on pages | Comment better | delete personal comments to myself (did this when it was in my own personal git repo)
+ |> Took Arjav's db, made it play nice with windows, needs further testing before commiting to Main, I will also have to fix a few UI quirks (ie 2 suggestions pop up after loggin in, clicking view on either will result in a crash) 
