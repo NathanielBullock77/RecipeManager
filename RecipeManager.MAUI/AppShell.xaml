@@ -26,12 +26,13 @@
       Icon="search.png"
       Route="browse"
       ContentTemplate="{DataTemplate local:BrowseRecipesPage}" />
-        
+
         <ShellContent
       Title="Add Recipe"
       Icon="search.png"
       Route="AddRecipe"
       ContentTemplate="{DataTemplate local:AddRecipePage}" />
+
 
         <ShellContent
       Title="Meal Plan"

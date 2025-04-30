@@ -59,7 +59,7 @@ namespace RecipeManager.MAUI.Views
             await _recipeService.AddRecipeAsync(NewRecipe, userId);
             var ingList = NewRecipe.Ingredients;
 
-            // navigate into the Shopping tab, passing the raw list
+            // navigate into the Shopping tab, passing the ingredients list
             await Shell.Current.GoToAsync(
               "//app/shopping",
               new Dictionary<string, object> { ["ingredients"] = ingList }
@@ -67,6 +67,17 @@ namespace RecipeManager.MAUI.Views
 
             // optionaly navigate back
             await Shell.Current.GoToAsync("//app/home");
+
+
+            // Clear the text entered after save button pressed
+            NewRecipe = new Recipe { Ingredients = new List<Ingredient>() };
+            OnPropertyChanged(nameof(NewRecipe));
+
+            NameEntry.Text = string.Empty;
+            DescriptionEditor.Text = string.Empty;
+            CookTimeEntry.Text = string.Empty;
+
+            Ingredients.Clear();
         }
     }
 }

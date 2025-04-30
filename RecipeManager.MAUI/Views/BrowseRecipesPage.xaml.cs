@@ -32,15 +32,17 @@ namespace RecipeManager.MAUI.Views
             BindingContext = this;
         }
 
+
         private async void OnViewRecipeClicked(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.CommandParameter is Guid id)
             {
-                await Shell.Current.GoToAsync(
-                    nameof(RecipeDetailPage),
-                    new Dictionary<string, object> { { "recipeId", id } }
-                );
+                // Pass recipeId as a query string
+                await Shell.Current.GoToAsync($"{nameof(RecipeDetailPage)}?recipeId={id}");
             }
         }
+
+
+
     }
 }
