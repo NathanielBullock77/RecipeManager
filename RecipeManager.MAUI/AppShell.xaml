@@ -45,12 +45,12 @@
       Icon="cart.png"
       Route="shopping"
       ContentTemplate="{DataTemplate local:ShoppingListPage}" />
-
+<!--
         <ShellContent
       Title="Settings"
       Icon="settings.png"
       Route="settings"
-      ContentTemplate="{DataTemplate local:SettingsPage}" />
+      ContentTemplate="{DataTemplate local:SettingsPage}" />   -->
     </TabBar>
 
 </Shell>

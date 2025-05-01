@@ -34,15 +34,6 @@ namespace RecipeManager.MAUI.Views
             }
         }
 
-        /*
-        private void OnBrowseRecipesClicked(object sender, EventArgs e)
-        {
-            // In a real app, you would navigate to a recipe browse page
-           //  DisplayAlert("Info", "Browse Recipes feature will be implemented soon!", "OK");
-            async void OnBrowseRecipesClicked(object s, EventArgs e)
-            {
-                await Shell.Current.GoToAsync("BrowseRecipesPage");
-            } 
-        }*/   // +!!+!+!+!+!+!++!+!+!+!+!+!++!+!++!+!++!+!+! note to self, Nathan: Come back to this! I cant remember why i commented this out, but it was probably important.
+
     }
 } 
