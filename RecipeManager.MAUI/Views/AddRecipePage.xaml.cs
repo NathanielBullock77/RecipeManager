@@ -5,6 +5,7 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using RecipeManager.Application.Services;
 using RecipeManager.Core.Models;
+using System.Collections.Generic;
 
 namespace RecipeManager.MAUI.Views
 {
@@ -20,63 +21,67 @@ namespace RecipeManager.MAUI.Views
             InitializeComponent();
             _recipeService = recipeService;
 
-            // init the recipe and collection
             NewRecipe = new Recipe
             {
-                Ingredients = new System.Collections.Generic.List<Ingredient>()
+                Ingredients = new List<Ingredient>(),
+                DietaryTags = new List<DietaryTag>()
             };
             Ingredients = new ObservableCollection<Ingredient>();
 
             BindingContext = this;
         }
 
-        // Add Ingredient is clicked
         private void OnAddIngredientClicked(object sender, EventArgs e)
         {
-            // add a blank ingredient to the ObservableCollection
             Ingredients.Add(new Ingredient { Name = string.Empty, Quantity = string.Empty });
         }
 
-        // Remove button of an ingredient row is clicked
         private void OnRemoveIngredientClicked(object sender, EventArgs e)
         {
-            // Button.BindingContext is the Ingredient instance
             var btn = (Button)sender;
             if (btn.BindingContext is Ingredient ing && Ingredients.Contains(ing))
                 Ingredients.Remove(ing);
         }
 
-        // Save Recipe is clicked
         private async void OnSaveClicked(object sender, EventArgs e)
         {
-            // get current user
             var uidStr = Preferences.Default.Get<string>("user_id", string.Empty);
             if (!Guid.TryParse(uidStr, out var userId))
                 return;
 
-            // copy into NewRcipe
-            NewRecipe.Ingredients = Ingredients.ToList();
-            await _recipeService.AddRecipeAsync(NewRecipe, userId);
-            var ingList = NewRecipe.Ingredients;
+            NewRecipe.Title = NameEntry.Text;
+            NewRecipe.Description = DescriptionEditor.Text;
 
-            // navigate into the Shopping tab, passing the ingredients list
+
+            NewRecipe.Ingredients = Ingredients.ToList();
+
+            var tags = new List<DietaryTag>();
+            if (KetoCheck.IsChecked) tags.Add(DietaryTag.Keto);
+            if (VegetarianCheck.IsChecked) tags.Add(DietaryTag.Vegetarian);
+            if (VeganCheck.IsChecked) tags.Add(DietaryTag.Vegan);
+            NewRecipe.DietaryTags = tags;
+
+            await _recipeService.AddRecipeAsync(NewRecipe, userId);
+
             await Shell.Current.GoToAsync(
               "//app/shopping",
-              new Dictionary<string, object> { ["ingredients"] = ingList }
+              new Dictionary<string, object> { ["ingredients"] = NewRecipe.Ingredients }
             );
-
-            // optionaly navigate back
             await Shell.Current.GoToAsync("//app/home");
 
-
-            // Clear the text entered after save button pressed
-            NewRecipe = new Recipe { Ingredients = new List<Ingredient>() };
+            NewRecipe = new Recipe
+            {
+                Ingredients = new List<Ingredient>(),
+                DietaryTags = new List<DietaryTag>()
+            };
             OnPropertyChanged(nameof(NewRecipe));
 
             NameEntry.Text = string.Empty;
             DescriptionEditor.Text = string.Empty;
             CookTimeEntry.Text = string.Empty;
-
+            KetoCheck.IsChecked = false;
+            VegetarianCheck.IsChecked = false;
+            VeganCheck.IsChecked = false;
             Ingredients.Clear();
         }
     }

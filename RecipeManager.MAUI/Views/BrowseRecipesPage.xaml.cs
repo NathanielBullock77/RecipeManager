@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using RecipeManager.Application.Services;
 using RecipeManager.Core.Models;
-
+using System.Collections.Generic;
 
 namespace RecipeManager.MAUI.Views
 {
@@ -21,44 +21,45 @@ namespace RecipeManager.MAUI.Views
         {
             InitializeComponent();
             _recipeService = recipeService;
-            
-            SearchCommand = new Command(async () => //refresh on search
+
+            SearchCommand = new Command(async () =>
             {
                 await ReloadRecipes();
             });
 
             BindingContext = this;
         }
-        protected override async void OnAppearing()//refreshes list under search bar on page load
+
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-
-           
             await ReloadRecipes();
-
         }
 
-
-            async Task ReloadRecipes() //Keeps the list fresh
+        async Task ReloadRecipes()
         {
             Recipes.Clear();
-            var results = await _recipeService.BrowseRecipesAsync(SearchTerm, null);
+            var tags = new List<DietaryTag>();
+            if (KetoFilterCheck.IsChecked) tags.Add(DietaryTag.Keto);
+            if (VegetarianFilterCheck.IsChecked) tags.Add(DietaryTag.Vegetarian);
+            if (VeganFilterCheck.IsChecked) tags.Add(DietaryTag.Vegan);
+
+            var results = await _recipeService.BrowseRecipesAsync(SearchTerm, tags);
             foreach (var r in results)
                 Recipes.Add(r);
         }
 
-
+        private async void OnFilterChanged(object sender, CheckedChangedEventArgs e)
+        {
+            await ReloadRecipes();
+        }
 
         private async void OnViewRecipeClicked(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.CommandParameter is Guid id)
             {
-                // Pass recipeId as a query string
                 await Shell.Current.GoToAsync($"{nameof(RecipeDetailPage)}?recipeId={id}");
             }
         }
-
-
-
     }
 }
