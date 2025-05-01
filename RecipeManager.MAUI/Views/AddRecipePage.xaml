@@ -11,7 +11,7 @@
             <Label Text="Recipe Name" FontAttributes="Bold" />
             <Entry 
                 x:Name="NameEntry" 
-                Text="{Binding NewRecipe.Title}" 
+                Text="{Binding NewRecipe.Name}" 
                 Placeholder="Enter recipe name" />
 
             <Label Text="Description" FontAttributes="Bold" />
@@ -24,26 +24,46 @@
             <Label Text="Cook Time" FontAttributes="Bold" />
             <Entry 
                 x:Name="CookTimeEntry"
-                Text="{Binding NewRecipe.CookTimeMinutes}"
-                Keyboard="Numeric"
-                Placeholder="e.g. 30" />
+                Text="{Binding NewRecipe.CookTime}"
+                Placeholder="e.g. 30 mins" />
 
+            <Label Text="Dietary Tags" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="15">
+                <CheckBox x:Name="KetoCheck" />
+                <Label Text="Keto" VerticalOptions="Center"/>
+
+                <CheckBox x:Name="VegetarianCheck" />
+                <Label Text="Vegetarian" VerticalOptions="Center"/>
+
+                <CheckBox x:Name="VeganCheck" />
+                <Label Text="Vegan" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <!-- Ingredients List -->
             <Label Text="Ingredients" FontAttributes="Bold" />
             <CollectionView ItemsSource="{Binding Ingredients}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                            <Entry Text="{Binding Quantity}" WidthRequest="80" Placeholder="Qty" />
-                            <Entry Text="{Binding Name}" Placeholder="Ingredient" />
-                            <Button Text="Remove" Clicked="OnRemoveIngredientClicked" CommandParameter="{Binding .}" />
+                            <Entry Text="{Binding Quantity}"
+                                   WidthRequest="80"
+                                   Placeholder="Qty" />
+                            <Entry Text="{Binding Name}"
+                                   Placeholder="Ingredient" />
+                            <Button Text="Remove"
+                                    Clicked="OnRemoveIngredientClicked"
+                                    BindingContext="{Binding .}" />
                         </HorizontalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            <!-- Add and Save Buttons -->
             <HorizontalStackLayout Spacing="20">
-                <Button Text="Add Ingredient" Clicked="OnAddIngredientClicked" />
-                <Button Text="Save Recipe" Clicked="OnSaveClicked" />
+                <Button Text="Add Ingredient"
+                        Clicked="OnAddIngredientClicked" />
+                <Button Text="Save Recipe"
+                        Clicked="OnSaveClicked" />
             </HorizontalStackLayout>
 
         </VerticalStackLayout>

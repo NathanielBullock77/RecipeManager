@@ -5,6 +5,7 @@ namespace RecipeManager.Core.Models
         None,
         Vegetarian,
         Vegan,
+        Keto,
         GlutenFree,
         DairyFree,
         NutFree
