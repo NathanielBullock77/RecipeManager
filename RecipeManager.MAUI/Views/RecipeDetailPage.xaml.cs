@@ -12,6 +12,8 @@ namespace RecipeManager.MAUI.Views
         private readonly IRecipeService _recipeService;
         private readonly IMealPlanService _mealPlanService;
 
+        public string FavoriteButtonText { get; set; }  //pfor favorite button text
+
         public Recipe Recipe { get; set; }
 
 
@@ -37,6 +39,7 @@ namespace RecipeManager.MAUI.Views
 
             Recipe = await _recipeService.GetRecipeDetailsAsync(id);
             OnPropertyChanged(nameof(Recipe));
+            await UpdateFavoriteButtonTextAsync();
         }
 
         private async void OnAddToMealPlanClicked(object sender, EventArgs e)
@@ -52,18 +55,31 @@ namespace RecipeManager.MAUI.Views
             await DisplayAlert("Success", "Added to meal plan.", "OK");
         }
 
-        private async void OnToggleFavoriteClicked(object sender, EventArgs e)
+        async Task UpdateFavoriteButtonTextAsync()
         {
-            var uidStr = Preferences.Default.Get<string>("user_id", string.Empty);
-            if (string.IsNullOrWhiteSpace(uidStr) || !Guid.TryParse(uidStr, out var userId))
+            var uidStr = Preferences.Default.Get<string>("user_id", "");
+            if (!Guid.TryParse(uidStr, out var userId) || Recipe == null)
                 return;
 
-            if (Recipe == null)
+            var favs = await _recipeService.GetFavoriteRecipesAsync(userId);
+            bool isFav = favs.Any(r => r.Id == Recipe.Id);
+
+            FavoriteButtonText = isFav ? "Remove Favorite" : "Add Favorites";
+            OnPropertyChanged(nameof(FavoriteButtonText));
+        }
+
+        async void OnToggleFavoriteClicked(object sender, EventArgs e)
+        {
+            var uidStr = Preferences.Default.Get<string>("user_id", "");
+            if (!Guid.TryParse(uidStr, out var userId) || Recipe == null)
                 return;
 
             await _recipeService.ToggleFavoriteAsync(userId, Recipe.Id);
-
+            await UpdateFavoriteButtonTextAsync();
         }
+    
+
+
 
         async void OnDeleteRecipeClicked(object sender, EventArgs e)
         {

@@ -37,7 +37,7 @@
 
             <HorizontalStackLayout Spacing="20">
                 <Button Text="Add to Meal Plan" Clicked="OnAddToMealPlanClicked" />
-                <Button Text="Toggle Favorite"  Clicked="OnToggleFavoriteClicked" />
+                <Button x:Name="FavoriteButton" Text="{Binding FavoriteButtonText}"  Clicked="OnToggleFavoriteClicked" BackgroundColor="Gold"/>
                 <Button Text="Delete Recipe"    Clicked="OnDeleteRecipeClicked" BackgroundColor="Crimson" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
