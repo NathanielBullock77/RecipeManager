@@ -13,7 +13,8 @@ namespace RecipeManager.Infrastructure.Persistence.Implementation.SQLite.Migrati
         {
             migrationBuilder.CreateTable(
                 name: "MealPlans",
-                columns: table => new
+                columns: table =>
+                new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     UserId = table.Column<Guid>(type: "TEXT", nullable: false),

@@ -1,44 +1,50 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage 
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  x:Class="RecipeManager.MAUI.Views.MealPlanPage"
-  Title="Meal Plan">
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:RecipeManager.MAUI.Views"
+    xmlns:model="clr-namespace:RecipeManager.Core.Models;assembly=RecipeManager.Core.Models"
+    x:Class="RecipeManager.MAUI.Views.MealPlanPage"
+    Title="Meal Plan">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="25" Padding="30">
-
-            <Label Text="This Week’s Plan"
-             FontAttributes="Bold"
-             FontSize="20" />
-
-            <Grid RowSpacing="10" ColumnSpacing="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <!-- Day 1 -->
-                <Frame Grid.Column="0" CornerRadius="8" Padding="5">
-                    <VerticalStackLayout>
-                        <Label Text="{Binding WeekDays[0].DayName}" FontAttributes="Bold" />
-                        <CollectionView ItemsSource="{Binding WeekDays[0].Recipes}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Label Text="{Binding Name}" />
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                </Frame>
-                <!-- Repeat for columns 1–6 binding WeekDays 1-6 -->
-            </Grid>
-
-        </VerticalStackLayout>
+        <HorizontalStackLayout
+      Spacing="10"
+      Padding="20"
+      BindableLayout.ItemsSource="{Binding WeekDays}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="vm:DayPlan">
+                    <Frame CornerRadius="8" Padding="10">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="{Binding DayName}" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <CollectionView ItemsSource="{Binding Recipes}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:Recipe">
+                                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                                            <Button Text="◀"
+                                                    Clicked="OnMoveLeftClicked"
+                                                    CommandParameter="{Binding .}" />
+                                            <Label Text="{Binding Title}"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    VerticalOptions="Center" />
+                                            <Button Text="▶"
+                                                    Clicked="OnMoveRightClicked"
+                                                    CommandParameter="{Binding .}" />
+                                            <Button Text="Remove"
+                                                    Clicked="OnRemoveClicked"
+                                                    CommandParameter="{Binding .}"
+                                                    BackgroundColor="Crimson"
+                                                    TextColor="White"
+                                                    WidthRequest="60" />
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </HorizontalStackLayout>
     </ScrollView>
+
 </ContentPage>
